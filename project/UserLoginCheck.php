@@ -1,0 +1,32 @@
+<?php
+
+  session_start();
+ $host="localhost";
+ $user="root";
+ $password="yash18121998yadav";
+ $db="DBMSdata";
+ $connect = mysqli_connect($host,$user,$password,$db);
+
+if(isset($_POST['submit'])){
+  $uname=$_POST['username'];
+  $password=$_POST['password'];
+  $sql="select * from registration where Email='".$uname."' AND PassWord='".$password."' limit 1";
+  $result=mysqli_query($connect,$sql);
+  if(mysqli_num_rows($result)==1){
+    $row_brand=mysqli_fetch_array($result);
+    $usrname = $row_brand["UserName"];
+    $_SESSION['username'] = $usrname;
+    ?>
+    <script>
+      window.location ="home.php";
+    </script>
+        <?php
+  }
+  else{
+
+    echo '<div class="errormsg" id="errormsg_0_Passwd">
+ Username and password do not match. (You provided XXXXXXXXXX)
+ </div>';
+  }
+}
+?>
